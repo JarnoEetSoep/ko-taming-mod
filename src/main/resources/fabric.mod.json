@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "id": "kotaming",
+  "version": "${version}",
+
+  "name": "KO Taming Mod",
+  "description": "A mod introducing KO taming for mobs.",
+  "authors": [
+    "Jargneau"
+  ],
+  "contact": {
+    "homepage": "https://github.com/JarnoEetSoep/ko-taming/blob/main/README.md",
+    "sources": "https://github.com/JarnoEetSoep/ko-taming"
+  },
+
+  "license": "agpl-3.0",
+  "icon": "assets/kotaming/icon.png",
+
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "net.jargneau.kotamingmod.Main"
+    ]
+  },
+  "mixins": [],
+
+  "depends": {
+    "fabricloader": ">=0.7.4",
+    "fabric": "*",
+    "minecraft": "1.16.x"
+  },
+  "suggests": {
+    "another-mod": "*"
+  }
+}
