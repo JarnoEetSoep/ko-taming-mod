@@ -1,4 +1,4 @@
-package net.jargneau.kotamingmod.items;
+package net.jargneau.kotamingmod.item;
 
 import net.jargneau.kotamingmod.Register;
 import net.minecraft.entity.effect.StatusEffectInstance;

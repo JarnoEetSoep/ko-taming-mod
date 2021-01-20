@@ -1,9 +1,9 @@
 package net.jargneau.kotamingmod;
 
-import net.jargneau.kotamingmod.items.Narcoberry;
-import net.jargneau.kotamingmod.items.Narcotic;
-import net.jargneau.kotamingmod.items.TranqArrow;
-import net.jargneau.kotamingmod.statuseffects.Knockout;
+import net.jargneau.kotamingmod.item.Narcoberry;
+import net.jargneau.kotamingmod.item.Narcotic;
+import net.jargneau.kotamingmod.item.TranqArrow;
+import net.jargneau.kotamingmod.statuseffect.Knockout;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.item.Item;
 import net.minecraft.util.Identifier;

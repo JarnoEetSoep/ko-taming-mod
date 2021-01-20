@@ -1,4 +1,4 @@
-package net.jargneau.kotamingmod.items;
+package net.jargneau.kotamingmod.item;
 
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
