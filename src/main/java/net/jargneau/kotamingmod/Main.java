@@ -2,8 +2,8 @@ package net.jargneau.kotamingmod;
 
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
+import net.jargneau.kotamingmod.misc.MobInventory;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -24,7 +24,7 @@ import java.util.Map;
 public class Main implements ModInitializer {
 
     public static final String MOD_ID = "kotaming";
-    public static Map<String, Inventory> inventories = new HashMap<>();
+    public static Map<String, MobInventory> mobInventories = new HashMap<>();
     public static List<String> playersOpenedInventory = new ArrayList<>();
 
     public static final ItemGroup ITEM_GROUP = FabricItemGroupBuilder.create(new Identifier(MOD_ID, "itemgroup"))

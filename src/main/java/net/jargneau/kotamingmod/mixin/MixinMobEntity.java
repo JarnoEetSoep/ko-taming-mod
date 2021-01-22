@@ -25,8 +25,8 @@ public abstract class MixinMobEntity extends LivingEntity {
         if(!isAlive())
             this.inventory.dropInventory();
 
-        if(!Main.inventories.containsKey(getUuidAsString()))
-            Main.inventories.put(getUuidAsString(), this.inventory);
+        if(!Main.mobInventories.containsKey(getUuidAsString()))
+            Main.mobInventories.put(getUuidAsString(), this.inventory);
     }
 
 }

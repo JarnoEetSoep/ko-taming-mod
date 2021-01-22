@@ -3,5 +3,9 @@
   "item.kotaming.narcoberry": "Narcoberry",
   "item.kotaming.narcotic": "Narcotic",
   "item.kotaming.tranq_arrow": "Tranquilizer arrow",
-  "effect.kotaming.knockout": "Knock out"
+  "effect.kotaming.knockout": "Knock out",
+  "entity.kotaming.tranq_arrow": "Tranquilizer arrow",
+  "kotaming.narcoberry.flavor_text": "§7Will restore your hunger, but makes you feel dizzy",
+  "kotaming.narcotic.flavor_text": "§2Potent tranquilizer used in tranquilizing weapons",
+  "kotaming.tranq_arrow.flavor_text": "§2Arrow tipped with narcotic. Used to KO entities!"
 }
