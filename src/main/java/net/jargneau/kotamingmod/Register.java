@@ -1,6 +1,8 @@
 package net.jargneau.kotamingmod;
 
+import net.fabricmc.fabric.api.command.v1.CommandRegistrationCallback;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricEntityTypeBuilder;
+import net.jargneau.kotamingmod.command.ConfigCommand;
 import net.jargneau.kotamingmod.entity.TranqArrowEntity;
 import net.jargneau.kotamingmod.item.Narcoberry;
 import net.jargneau.kotamingmod.item.Narcotic;
@@ -32,6 +34,8 @@ public class Register {
         Registry.register(Registry.ITEM, new Identifier(Main.MOD_ID, "tranq_arrow"), TRANQ_ARROW);
 
         Registry.register(Registry.ENTITY_TYPE, new Identifier(Main.MOD_ID, "tranq_arrow"), TRANQ_ARROW_ENTITYTYPE);
+
+        CommandRegistrationCallback.EVENT.register((dispatcher, dedicated) -> ConfigCommand.register(dispatcher));
     }
 
 }

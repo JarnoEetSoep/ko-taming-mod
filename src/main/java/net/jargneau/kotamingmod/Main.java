@@ -1,5 +1,7 @@
 package net.jargneau.kotamingmod;
 
+import me.lortseam.completeconfig.ConfigHandler;
+import me.lortseam.completeconfig.data.Config;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
 import net.jargneau.kotamingmod.misc.MobInventory;
@@ -26,6 +28,8 @@ public class Main implements ModInitializer {
     public static final String MOD_ID = "kotaming";
     public static Map<String, MobInventory> mobInventories = new HashMap<>();
     public static List<String> playersOpenedInventory = new ArrayList<>();
+    private static ConfigHandler configHandler;
+    private static Configuration configuration;
 
     public static final ItemGroup ITEM_GROUP = FabricItemGroupBuilder.create(new Identifier(MOD_ID, "itemgroup"))
             .icon(() -> new ItemStack(Register.TRANQ_ARROW))
@@ -40,6 +44,11 @@ public class Main implements ModInitializer {
     @Override
     public void onInitialize() {
         Register.registerAll();
+
+        configuration = new Configuration();
+        configHandler = Config.builder(Main.MOD_ID)
+                .add(configuration)
+                .build();
     }
 
     public static void SavePlayerData(MinecraftServer server, PlayerEntity player) {
@@ -54,6 +63,14 @@ public class Main implements ModInitializer {
         } catch (Exception var6) {
             LogManager.getLogger().warn("Failed to save player data for {}", player.getName().getString());
         }
+    }
+
+    public static Configuration getConfig() {
+        return configuration;
+    }
+
+    public static ConfigHandler getConfigHandler() {
+        return configHandler;
     }
 
 }

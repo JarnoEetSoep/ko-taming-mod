@@ -23,6 +23,9 @@
     ],
     "client": [
       "net.jargneau.kotamingmod.Client"
+    ],
+    "modmenu": [
+      "net.jargneau.kotamingmod.gui.ModMenuIntegration"
     ]
   },
   "mixins": [
