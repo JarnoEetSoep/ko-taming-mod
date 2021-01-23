@@ -16,7 +16,7 @@ import java.util.Map;
 public abstract class MixinDonkeyEntity extends LivingEntity implements TorporEntity, KOTamableEntity {
 
     private int torpor = 0;
-    private final int BASETORPOR = Main.getConfig().baseDonkeyTorpor;
+    private final int BASETORPOR = Main.getBaseTorporConfig().baseDonkeyTorpor;
 
     protected MixinDonkeyEntity(EntityType<? extends LivingEntity> entityType, World world) {
         super(entityType, world);

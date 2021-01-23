@@ -16,7 +16,7 @@ import java.util.Map;
 public abstract class MixinMooshroomEntity extends LivingEntity implements TorporEntity, KOTamableEntity {
 
     private int torpor = 0;
-    private final int BASETORPOR = Main.getConfig().baseMooshroomTorpor;
+    private final int BASETORPOR = Main.getBaseTorporConfig().baseMooshroomTorpor;
 
     protected MixinMooshroomEntity(EntityType<? extends LivingEntity> entityType, World world) {
         super(entityType, world);

@@ -4,6 +4,8 @@ import me.lortseam.completeconfig.ConfigHandler;
 import me.lortseam.completeconfig.data.Config;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
+import net.jargneau.kotamingmod.configuration.BaseTorporConfiguration;
+import net.jargneau.kotamingmod.configuration.GeneralConfiguration;
 import net.jargneau.kotamingmod.misc.MobInventory;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemGroup;
@@ -29,7 +31,8 @@ public class Main implements ModInitializer {
     public static Map<String, MobInventory> mobInventories = new HashMap<>();
     public static List<String> playersOpenedInventory = new ArrayList<>();
     private static ConfigHandler configHandler;
-    private static Configuration configuration;
+    private static BaseTorporConfiguration baseTorporConfiguration;
+    private static GeneralConfiguration generalConfiguration;
 
     public static final ItemGroup ITEM_GROUP = FabricItemGroupBuilder.create(new Identifier(MOD_ID, "itemgroup"))
             .icon(() -> new ItemStack(Register.TRANQ_ARROW))
@@ -45,9 +48,11 @@ public class Main implements ModInitializer {
     public void onInitialize() {
         Register.registerAll();
 
-        configuration = new Configuration();
+        generalConfiguration = new GeneralConfiguration();
+        baseTorporConfiguration = new BaseTorporConfiguration();
+
         configHandler = Config.builder(Main.MOD_ID)
-                .add(configuration)
+                .add(generalConfiguration, baseTorporConfiguration)
                 .build();
     }
 
@@ -65,8 +70,12 @@ public class Main implements ModInitializer {
         }
     }
 
-    public static Configuration getConfig() {
-        return configuration;
+    public static GeneralConfiguration getGeneralConfiguration() {
+        return generalConfiguration;
+    }
+
+    public static BaseTorporConfiguration getBaseTorporConfig() {
+        return baseTorporConfiguration;
     }
 
     public static ConfigHandler getConfigHandler() {

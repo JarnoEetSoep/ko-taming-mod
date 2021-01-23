@@ -23,7 +23,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public abstract class MixinPlayerEntity extends LivingEntity implements TorporEntity {
 
     private int torpor;
-    private final int BASETORPOR = Main.getConfig().basePlayerTorpor;
+    private final int BASETORPOR = Main.getBaseTorporConfig().basePlayerTorpor;
 
     protected MixinPlayerEntity(EntityType<? extends LivingEntity> entityType, World world) {
         super(entityType, world);

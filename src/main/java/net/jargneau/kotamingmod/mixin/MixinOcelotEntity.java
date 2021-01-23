@@ -16,7 +16,7 @@ import java.util.Map;
 public abstract class MixinOcelotEntity extends LivingEntity implements TorporEntity, KOTamableEntity {
 
     private int torpor = 0;
-    private final int BASETORPOR = Main.getConfig().baseOcelotTorpor;
+    private final int BASETORPOR = Main.getBaseTorporConfig().baseOcelotTorpor;
 
     protected MixinOcelotEntity(EntityType<? extends LivingEntity> entityType, World world) {
         super(entityType, world);

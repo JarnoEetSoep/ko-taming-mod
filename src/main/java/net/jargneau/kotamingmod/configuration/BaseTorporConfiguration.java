@@ -1,8 +1,8 @@
-package net.jargneau.kotamingmod;
+package net.jargneau.kotamingmod.configuration;
 
 import me.lortseam.completeconfig.api.ConfigGroup;
 
-public class Configuration implements ConfigGroup {
+public class BaseTorporConfiguration implements ConfigGroup, SimpleConfiguration {
 
     // Al tameable creatures
     public int basePlayerTorpor = 200;
@@ -70,6 +70,7 @@ public class Configuration implements ConfigGroup {
         return true;
     }
 
+    @Override
     public Object getField(String key) {
         switch(key) {
             case "basePlayerTorpor": return basePlayerTorpor;
@@ -132,6 +133,7 @@ public class Configuration implements ConfigGroup {
         }
     }
 
+    @Override
     public int setField(String key, Object value) {
         switch(key) {
             case "basePlayerTorpor": basePlayerTorpor = (int) value; return 1;

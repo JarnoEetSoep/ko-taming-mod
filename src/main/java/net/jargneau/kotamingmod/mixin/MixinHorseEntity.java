@@ -16,7 +16,7 @@ import java.util.Map;
 public abstract class MixinHorseEntity extends LivingEntity implements TorporEntity, KOTamableEntity {
 
     private int torpor = 0;
-    private final int BASETORPOR = Main.getConfig().baseHorseTorpor;
+    private final int BASETORPOR = Main.getBaseTorporConfig().baseHorseTorpor;
 
     protected MixinHorseEntity(EntityType<? extends LivingEntity> entityType, World world) {
         super(entityType, world);

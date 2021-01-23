@@ -37,10 +37,8 @@ public abstract class MixinLivingEntity extends Entity {
             if(self.getTorpor() == self.getBaseTorpor() || (this.hasStatusEffect(Register.KNOCKOUT) && self.getTorpor() != 0))
                 this.addStatusEffect(new StatusEffectInstance(Register.KNOCKOUT, 20));
 
-            if(age % 50 == 0 && self.getTorpor() != 0) {
+            if(age % 50 == 0 && self.getTorpor() != 0)
                 self.setTorpor(self.getTorpor() - 4);
-                System.out.println(self.getTorpor());
-            }
 
             if(this.hasStatusEffect(Register.KNOCKOUT)) {
                 if (this.hasVehicle())

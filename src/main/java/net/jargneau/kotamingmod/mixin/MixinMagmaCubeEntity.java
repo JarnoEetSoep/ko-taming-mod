@@ -12,7 +12,7 @@ import org.spongepowered.asm.mixin.Mixin;
 public abstract class MixinMagmaCubeEntity extends SlimeEntity implements TorporEntity {
 
     private int torpor = 0;
-    private final int BASETORPOR = Main.getConfig().baseMagmaCubeTorpor * this.getSize();
+    private final int BASETORPOR = Main.getBaseTorporConfig().baseMagmaCubeTorpor * this.getSize();
 
     public MixinMagmaCubeEntity(EntityType<? extends SlimeEntity> entityType, World world) {
         super(entityType, world);

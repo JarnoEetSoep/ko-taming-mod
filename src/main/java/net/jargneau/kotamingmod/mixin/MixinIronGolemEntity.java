@@ -12,7 +12,7 @@ import org.spongepowered.asm.mixin.Mixin;
 public abstract class MixinIronGolemEntity extends LivingEntity implements TorporEntity {
 
     private int torpor = 0;
-    private final int BASETORPOR = Main.getConfig().baseIronGolemTorpor;
+    private final int BASETORPOR = Main.getBaseTorporConfig().baseIronGolemTorpor;
 
     protected MixinIronGolemEntity(EntityType<? extends LivingEntity> entityType, World world) {
         super(entityType, world);

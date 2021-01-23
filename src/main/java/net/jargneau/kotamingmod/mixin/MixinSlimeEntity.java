@@ -15,7 +15,7 @@ public abstract class MixinSlimeEntity extends LivingEntity implements TorporEnt
     @Shadow public abstract int getSize();
 
     private int torpor = 0;
-    private final int BASETORPOR = Main.getConfig().baseSlimeTorpor * this.getSize();
+    private final int BASETORPOR = Main.getBaseTorporConfig().baseSlimeTorpor * this.getSize();
 
     protected MixinSlimeEntity(EntityType<? extends LivingEntity> entityType, World world) {
         super(entityType, world);

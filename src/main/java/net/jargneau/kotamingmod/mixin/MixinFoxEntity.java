@@ -16,7 +16,7 @@ import java.util.Map;
 public abstract class MixinFoxEntity extends LivingEntity implements TorporEntity, KOTamableEntity {
 
     private int torpor = 0;
-    private final int BASETORPOR = Main.getConfig().baseFoxTorpor;
+    private final int BASETORPOR = Main.getBaseTorporConfig().baseFoxTorpor;
 
     protected MixinFoxEntity(EntityType<? extends LivingEntity> entityType, World world) {
         super(entityType, world);

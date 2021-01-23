@@ -7,16 +7,18 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.passive.ChickenEntity;
 import net.minecraft.item.Item;
+import net.minecraft.item.Items;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
 
+import java.util.HashMap;
 import java.util.Map;
 
 @Mixin(ChickenEntity.class)
 public abstract class MixinChickenEntity extends LivingEntity implements TorporEntity, KOTamableEntity {
 
     private int torpor = 0;
-    private final int BASETORPOR = Main.getConfig().baseChickenTorpor;
+    private final int BASETORPOR = Main.getBaseTorporConfig().baseChickenTorpor;
 
     protected MixinChickenEntity(EntityType<? extends LivingEntity> entityType, World world) {
         super(entityType, world);

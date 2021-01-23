@@ -16,7 +16,7 @@ import java.util.Map;
 public abstract class MixinWolfEntity extends LivingEntity implements TorporEntity, KOTamableEntity {
 
     private int torpor = 0;
-    private final int BASETORPOR = Main.getConfig().baseWolfTorpor;
+    private final int BASETORPOR = Main.getBaseTorporConfig().baseWolfTorpor;
 
     protected MixinWolfEntity(EntityType<? extends LivingEntity> entityType, World world) {
         super(entityType, world);

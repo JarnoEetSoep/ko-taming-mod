@@ -16,7 +16,7 @@ import java.util.Map;
 public abstract class MixinPolarBearEntity extends LivingEntity implements TorporEntity, KOTamableEntity {
 
     private int torpor = 0;
-    private final int BASETORPOR = Main.getConfig().basePolarBearTorpor;
+    private final int BASETORPOR = Main.getBaseTorporConfig().basePolarBearTorpor;
 
     protected MixinPolarBearEntity(EntityType<? extends LivingEntity> entityType, World world) {
         super(entityType, world);

@@ -16,7 +16,7 @@ import java.util.Map;
 public abstract class MixinParrotEntity extends LivingEntity implements TorporEntity, KOTamableEntity {
 
     private int torpor = 0;
-    private final int BASETORPOR = Main.getConfig().baseParrotTorpor;
+    private final int BASETORPOR = Main.getBaseTorporConfig().baseParrotTorpor;
 
     protected MixinParrotEntity(EntityType<? extends LivingEntity> entityType, World world) {
         super(entityType, world);
