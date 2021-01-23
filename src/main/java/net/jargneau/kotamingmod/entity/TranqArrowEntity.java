@@ -62,7 +62,12 @@ public class TranqArrowEntity extends PersistentProjectileEntity {
         super.onEntityHit(hitResult);
 
         if(!this.world.isClient) {
-            // Add torpor to hitResult.getEntity()
+            if(!(hitResult.getEntity() instanceof TorporEntity))
+                return;
+
+            TorporEntity victim = (TorporEntity) hitResult.getEntity();
+
+            victim.setTorpor(victim.getTorpor() + 25);
         }
     }
 

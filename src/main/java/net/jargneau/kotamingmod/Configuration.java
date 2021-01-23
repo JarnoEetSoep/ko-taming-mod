@@ -62,6 +62,8 @@ public class Configuration implements ConfigGroup {
     public int baseWitherSkeletonTorpor = 300;
     public int baseVexTorpor = 20;
     public int baseWitchTorpor = 250;
+    public int baseHuskTorpor = 250;
+    public int baseStrayTorpor = 250;
 
     @Override
     public boolean isConfigPOJO() {
@@ -124,6 +126,8 @@ public class Configuration implements ConfigGroup {
             case "baseWitherSkeletonTorpor": return baseWitherSkeletonTorpor;
             case "baseVexTorpor": return baseVexTorpor;
             case "baseWitchTorpor": return baseWitchTorpor;
+            case "baseHuskTorpor": return baseHuskTorpor;
+            case "baseStrayTorpor": return baseStrayTorpor;
             default: return -1;
         }
     }
@@ -184,6 +188,8 @@ public class Configuration implements ConfigGroup {
             case "baseWitherSkeletonTorpor": baseWitherSkeletonTorpor = (int) value; return 1;
             case "baseVexTorpor": baseVexTorpor = (int) value; return 1;
             case "baseWitchTorpor": baseWitchTorpor = (int) value; return 1;
+            case "baseHuskTorpor": baseHuskTorpor = (int) value; return 1;
+            case "baseStrayTorpor": baseStrayTorpor = (int) value; return 1;
             default: return -1;
         }
     }

@@ -63,5 +63,7 @@
   "config.kotaming.configuration.baseSkeletonTorpor": "Amount of torpor a skeleton has",
   "config.kotaming.configuration.baseWitherSkeletonTorpor": "Amount of torpor a wither skeleton has",
   "config.kotaming.configuration.baseVexTorpor": "Amount of torpor a vex has",
-  "config.kotaming.configuration.baseWitchTorpor": "Amount of torpor a witch has"
+  "config.kotaming.configuration.baseWitchTorpor": "Amount of torpor a witch has",
+  "config.kotaming.configuration.baseHuskTorpor": "Amount of torpor a husk has",
+  "config.kotaming.configuration.baseStrayTorpor": "Amount of torpor a stray has"
 }

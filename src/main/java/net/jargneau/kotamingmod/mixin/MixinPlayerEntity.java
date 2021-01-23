@@ -2,6 +2,7 @@ package net.jargneau.kotamingmod.mixin;
 
 import net.jargneau.kotamingmod.Main;
 import net.jargneau.kotamingmod.Register;
+import net.jargneau.kotamingmod.entity.TorporEntity;
 import net.jargneau.kotamingmod.gui.MobInventoryScreenHandler;
 import net.jargneau.kotamingmod.gui.PlayerInventoryScreenHandler;
 import net.minecraft.entity.Entity;
@@ -19,7 +20,10 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(PlayerEntity.class)
-public abstract class MixinPlayerEntity extends LivingEntity {
+public abstract class MixinPlayerEntity extends LivingEntity implements TorporEntity {
+
+    private int torpor;
+    private final int BASETORPOR = Main.getConfig().basePlayerTorpor;
 
     protected MixinPlayerEntity(EntityType<? extends LivingEntity> entityType, World world) {
         super(entityType, world);
@@ -51,6 +55,27 @@ public abstract class MixinPlayerEntity extends LivingEntity {
 
             cir.setReturnValue(ActionResult.SUCCESS);
         }
+    }
+
+    @Override
+    public int getTorpor() {
+        return this.torpor;
+    }
+
+    @Override
+    public void setTorpor(int amount) {
+        this.torpor = amount;
+
+        if(this.torpor > this.BASETORPOR)
+            this.torpor = this.BASETORPOR;
+
+        if(this.torpor < 0)
+            this.torpor = 0;
+    }
+
+    @Override
+    public int getBaseTorpor() {
+        return this.BASETORPOR;
     }
 
 }
