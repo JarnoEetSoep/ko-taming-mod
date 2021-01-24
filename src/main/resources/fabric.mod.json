@@ -9,8 +9,9 @@
     "Jargneau"
   ],
   "contact": {
-    "homepage": "https://github.com/JarnoEetSoep/ko-taming/blob/main/README.md",
-    "sources": "https://github.com/JarnoEetSoep/ko-taming"
+    "homepage": "https://github.com/JarnoEetSoep/ko-taming-mod/blob/master/README.md",
+    "sources": "https://github.com/JarnoEetSoep/ko-taming-mod",
+    "issues": "https://github.com/JarnoEetSoep/ko-taming-mod/issues"
   },
 
   "license": "agpl-3.0",

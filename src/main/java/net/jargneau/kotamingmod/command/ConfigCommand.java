@@ -2,16 +2,20 @@ package net.jargneau.kotamingmod.command;
 
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
+import com.mojang.brigadier.context.CommandContext;
+import com.mojang.brigadier.suggestion.Suggestions;
+import com.mojang.brigadier.suggestion.SuggestionsBuilder;
 import net.jargneau.kotamingmod.Main;
 import net.jargneau.kotamingmod.configuration.SimpleConfiguration;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.text.LiteralText;
 import net.minecraft.text.TranslatableText;
 
-import static com.mojang.brigadier.arguments.BoolArgumentType.getBool;
-import static com.mojang.brigadier.arguments.BoolArgumentType.bool;
-import static com.mojang.brigadier.arguments.IntegerArgumentType.getInteger;
-import static com.mojang.brigadier.arguments.IntegerArgumentType.integer;
+import java.util.concurrent.CompletableFuture;
+
+import static com.mojang.brigadier.arguments.StringArgumentType.getString;
+import static com.mojang.brigadier.arguments.StringArgumentType.word;
+import static com.mojang.brigadier.arguments.StringArgumentType.greedyString;
 import static net.minecraft.server.command.CommandManager.*;
 
 public class ConfigCommand {
@@ -20,298 +24,84 @@ public class ConfigCommand {
         LiteralArgumentBuilder<ServerCommandSource> literalargumentbuilder = literal("config")
                 .requires((source) -> source.hasPermissionLevel(4))
                 .then(literal("GeneralConfiguration")
-                    .then(literal("getField")
-                            .then(literal("goodmod")
-                                    .executes((c) -> getField(c.getSource(), Main.getGeneralConfiguration(), "goodmod"))))
-                    .then(literal("setField")
-                            .then(literal("goodmod")
-                                    .then(argument("value", bool())
-                                            .executes((c) -> setField(c.getSource(), Main.getGeneralConfiguration(), "goodmod", getBool(c, "value")))))))
+                        .then(argument("key", word()).suggests(ConfigCommand::suggestGeneralFields)
+                                .executes((c) -> getField(c.getSource(), Main.getGeneralConfiguration(), getString(c, "key")))
+                                .then(argument("value", greedyString())
+                                        .executes((c) -> setField(c.getSource(), Main.getGeneralConfiguration(), getString(c, "key"), getString(c, "value"))))))
                 .then(literal("BaseTorporConfiguration")
-                    .then(literal("getField")
-                            .then(literal("basePlayerTorpor")
-                                    .executes((c) -> getField(c.getSource(), Main.getBaseTorporConfig(),"basePlayerTorpor")))
-                            .then(literal("baseChickenTorpor")
-                                    .executes((c) -> getField(c.getSource(), Main.getBaseTorporConfig(),"baseChickenTorpor")))
-                            .then(literal("baseCowTorpor")
-                                    .executes((c) -> getField(c.getSource(), Main.getBaseTorporConfig(),"baseCowTorpor")))
-                            .then(literal("baseDonkeyTorpor")
-                                    .executes((c) -> getField(c.getSource(), Main.getBaseTorporConfig(),"baseDonkeyTorpor")))
-                            .then(literal("baseFoxTorpor")
-                                    .executes((c) -> getField(c.getSource(), Main.getBaseTorporConfig(),"baseFoxTorpor")))
-                            .then(literal("baseHorseTorpor")
-                                    .executes((c) -> getField(c.getSource(), Main.getBaseTorporConfig(),"baseHorseTorpor")))
-                            .then(literal("baseMooshroomTorpor")
-                                    .executes((c) -> getField(c.getSource(), Main.getBaseTorporConfig(),"baseMooshroomTorpor")))
-                            .then(literal("baseMuleTorpor")
-                                    .executes((c) -> getField(c.getSource(), Main.getBaseTorporConfig(),"baseMuleTorpor")))
-                            .then(literal("baseOcelotTorpor")
-                                    .executes((c) -> getField(c.getSource(), Main.getBaseTorporConfig(),"baseOcelotTorpor")))
-                            .then(literal("baseParrotTorpor")
-                                    .executes((c) -> getField(c.getSource(), Main.getBaseTorporConfig(),"baseParrotTorpor")))
-                            .then(literal("basePigTorpor")
-                                    .executes((c) -> getField(c.getSource(), Main.getBaseTorporConfig(),"basePigTorpor")))
-                            .then(literal("basePolarBearTorpor")
-                                    .executes((c) -> getField(c.getSource(), Main.getBaseTorporConfig(),"basePolarBearTorpor")))
-                            .then(literal("baseRabbitTorpor")
-                                    .executes((c) -> getField(c.getSource(), Main.getBaseTorporConfig(),"baseRabbitTorpor")))
-                            .then(literal("baseSheepTorpor")
-                                    .executes((c) -> getField(c.getSource(), Main.getBaseTorporConfig(),"baseSheepTorpor")))
-                            .then(literal("baseLlamaTorpor")
-                                    .executes((c) -> getField(c.getSource(), Main.getBaseTorporConfig(),"baseLlamaTorpor")))
-                            .then(literal("baseWolfTorpor")
-                                    .executes((c) -> getField(c.getSource(), Main.getBaseTorporConfig(),"baseWolfTorpor")))
-                            .then(literal("baseBatTorpor")
-                                    .executes((c) -> getField(c.getSource(), Main.getBaseTorporConfig(),"baseBatTorpor")))
-                            .then(literal("baseFishTorpor")
-                                    .executes((c) -> getField(c.getSource(), Main.getBaseTorporConfig(),"baseFishTorpor")))
-                            .then(literal("baseSnowGolemTorpor")
-                                    .executes((c) -> getField(c.getSource(), Main.getBaseTorporConfig(),"baseSnowGolemTorpor")))
-                            .then(literal("baseIronGolemTorpor")
-                                    .executes((c) -> getField(c.getSource(), Main.getBaseTorporConfig(),"baseIronGolemTorpor")))
-                            .then(literal("baseSquidTorpor")
-                                    .executes((c) -> getField(c.getSource(), Main.getBaseTorporConfig(),"baseSquidTorpor")))
-                            .then(literal("baseStriderTorpor")
-                                    .executes((c) -> getField(c.getSource(), Main.getBaseTorporConfig(),"baseStriderTorpor")))
-                            .then(literal("baseTurtleTorpor")
-                                    .executes((c) -> getField(c.getSource(), Main.getBaseTorporConfig(),"baseTurtleTorpor")))
-                            .then(literal("baseVillagerTorpor")
-                                    .executes((c) -> getField(c.getSource(), Main.getBaseTorporConfig(),"baseVillagerTorpor")))
-                            .then(literal("baseIllagerTorpor")
-                                    .executes((c) -> getField(c.getSource(), Main.getBaseTorporConfig(),"baseIllagerTorpor")))
-                            .then(literal("baseBeeTorpor")
-                                    .executes((c) -> getField(c.getSource(), Main.getBaseTorporConfig(),"baseBeeTorpor")))
-                            .then(literal("baseSpiderTorpor")
-                                    .executes((c) -> getField(c.getSource(), Main.getBaseTorporConfig(),"baseSpiderTorpor")))
-                            .then(literal("baseCaveSpiderTorpor")
-                                    .executes((c) -> getField(c.getSource(), Main.getBaseTorporConfig(),"baseCaveSpiderTorpor")))
-                            .then(literal("baseDolphinTorpor")
-                                    .executes((c) -> getField(c.getSource(), Main.getBaseTorporConfig(),"baseDolphinTorpor")))
-                            .then(literal("baseEndermanTorpor")
-                                    .executes((c) -> getField(c.getSource(), Main.getBaseTorporConfig(),"baseEndermanTorpor")))
-                            .then(literal("basePandaTorpor")
-                                    .executes((c) -> getField(c.getSource(), Main.getBaseTorporConfig(),"basePandaTorpor")))
-                            .then(literal("baseZombifiedPiglinTorpor")
-                                    .executes((c) -> getField(c.getSource(), Main.getBaseTorporConfig(),"baseZombifiedPiglinTorpor")))
-                            .then(literal("basePiglinTorpor")
-                                    .executes((c) -> getField(c.getSource(), Main.getBaseTorporConfig(),"basePiglinTorpor")))
-                            .then(literal("baseBlazeTorpor")
-                                    .executes((c) -> getField(c.getSource(), Main.getBaseTorporConfig(),"baseBlazeTorpor")))
-                            .then(literal("baseCreeperTorpor")
-                                    .executes((c) -> getField(c.getSource(), Main.getBaseTorporConfig(),"baseCreeperTorpor")))
-                            .then(literal("baseDrownedTorpor")
-                                    .executes((c) -> getField(c.getSource(), Main.getBaseTorporConfig(),"baseDrownedTorpor")))
-                            .then(literal("baseZombieTorpor")
-                                    .executes((c) -> getField(c.getSource(), Main.getBaseTorporConfig(),"baseZombieTorpor")))
-                            .then(literal("baseElderGuardianTorpor")
-                                    .executes((c) -> getField(c.getSource(), Main.getBaseTorporConfig(),"baseElderGuardianTorpor")))
-                            .then(literal("baseGuardianTorpor")
-                                    .executes((c) -> getField(c.getSource(), Main.getBaseTorporConfig(),"baseGuardianTorpor")))
-                            .then(literal("baseEndermiteTorpor")
-                                    .executes((c) -> getField(c.getSource(), Main.getBaseTorporConfig(),"baseEndermiteTorpor")))
-                            .then(literal("baseSilverfishTorpor")
-                                    .executes((c) -> getField(c.getSource(), Main.getBaseTorporConfig(),"baseSilverfishTorpor")))
-                            .then(literal("baseGhastTorpor")
-                                    .executes((c) -> getField(c.getSource(), Main.getBaseTorporConfig(),"baseGhastTorpor")))
-                            .then(literal("baseHoglinTorpor")
-                                    .executes((c) -> getField(c.getSource(), Main.getBaseTorporConfig(),"baseHoglinTorpor")))
-                            .then(literal("baseZoglinTorpor")
-                                    .executes((c) -> getField(c.getSource(), Main.getBaseTorporConfig(),"baseZoglinTorpor")))
-                            .then(literal("baseSlimeTorpor")
-                                    .executes((c) -> getField(c.getSource(), Main.getBaseTorporConfig(),"baseSlimeTorpor")))
-                            .then(literal("baseMagmaCubeTorpor")
-                                    .executes((c) -> getField(c.getSource(), Main.getBaseTorporConfig(),"baseMagmaCubeTorpor")))
-                            .then(literal("basePhantomTorpor")
-                                    .executes((c) -> getField(c.getSource(), Main.getBaseTorporConfig(),"basePhantomTorpor")))
-                            .then(literal("basePiglinBruteTorpor")
-                                    .executes((c) -> getField(c.getSource(), Main.getBaseTorporConfig(),"basePiglinBruteTorpor")))
-                            .then(literal("baseRavagerTorpor")
-                                    .executes((c) -> getField(c.getSource(), Main.getBaseTorporConfig(),"baseRavagerTorpor")))
-                            .then(literal("baseShulkerTorpor")
-                                    .executes((c) -> getField(c.getSource(), Main.getBaseTorporConfig(),"baseShulkerTorpor")))
-                            .then(literal("baseSkeletonTorpor")
-                                    .executes((c) -> getField(c.getSource(), Main.getBaseTorporConfig(),"baseSkeletonTorpor")))
-                            .then(literal("baseWitherSkeletonTorpor")
-                                    .executes((c) -> getField(c.getSource(), Main.getBaseTorporConfig(),"baseWitherSkeletonTorpor")))
-                            .then(literal("baseVexTorpor")
-                                    .executes((c) -> getField(c.getSource(), Main.getBaseTorporConfig(),"baseVexTorpor")))
-                            .then(literal("baseWitchTorpor")
-                                    .executes((c) -> getField(c.getSource(), Main.getBaseTorporConfig(),"baseWitchTorpor")))
-                            .then(literal("baseHuskTorpor")
-                                    .executes((c) -> getField(c.getSource(), Main.getBaseTorporConfig(),"baseHuskTorpor")))
-                            .then(literal("baseStrayTorpor")
-                                    .executes((c) -> getField(c.getSource(), Main.getBaseTorporConfig(),"baseStrayTorpor"))))
-                    .then(literal("setField")
-                            .then(literal("basePlayerTorpor")
-                                    .then(argument("value", integer())
-                                            .executes((c) -> setField(c.getSource(), Main.getBaseTorporConfig(),"basePlayerTorpor", getInteger(c, "value")))))
-                            .then(literal("baseChickenTorpor")
-                                    .then(argument("value", integer())
-                                            .executes((c) -> setField(c.getSource(), Main.getBaseTorporConfig(),"baseChickenTorpor", getInteger(c, "value")))))
-                            .then(literal("baseCowTorpor")
-                                    .then(argument("value", integer())
-                                            .executes((c) -> setField(c.getSource(), Main.getBaseTorporConfig(),"baseCowTorpor", getInteger(c, "value")))))
-                            .then(literal("baseDonkeyTorpor")
-                                    .then(argument("value", integer())
-                                            .executes((c) -> setField(c.getSource(), Main.getBaseTorporConfig(),"baseDonkeyTorpor", getInteger(c, "value")))))
-                            .then(literal("baseFoxTorpor")
-                                    .then(argument("value", integer())
-                                            .executes((c) -> setField(c.getSource(), Main.getBaseTorporConfig(),"baseFoxTorpor", getInteger(c, "value")))))
-                            .then(literal("baseHorseTorpor")
-                                    .then(argument("value", integer())
-                                            .executes((c) -> setField(c.getSource(), Main.getBaseTorporConfig(),"baseHorseTorpor", getInteger(c, "value")))))
-                            .then(literal("baseMooshroomTorpor")
-                                    .then(argument("value", integer())
-                                            .executes((c) -> setField(c.getSource(), Main.getBaseTorporConfig(),"baseMooshroomTorpor", getInteger(c, "value")))))
-                            .then(literal("baseMuleTorpor")
-                                    .then(argument("value", integer())
-                                            .executes((c) -> setField(c.getSource(), Main.getBaseTorporConfig(),"baseMuleTorpor", getInteger(c, "value")))))
-                            .then(literal("baseOcelotTorpor")
-                                    .then(argument("value", integer())
-                                            .executes((c) -> setField(c.getSource(), Main.getBaseTorporConfig(),"baseOcelotTorpor", getInteger(c, "value")))))
-                            .then(literal("baseParrotTorpor")
-                                    .then(argument("value", integer())
-                                            .executes((c) -> setField(c.getSource(), Main.getBaseTorporConfig(),"baseParrotTorpor", getInteger(c, "value")))))
-                            .then(literal("basePigTorpor")
-                                    .then(argument("value", integer())
-                                            .executes((c) -> setField(c.getSource(), Main.getBaseTorporConfig(),"basePigTorpor", getInteger(c, "value")))))
-                            .then(literal("basePolarBearTorpor")
-                                    .then(argument("value", integer())
-                                            .executes((c) -> setField(c.getSource(), Main.getBaseTorporConfig(),"basePolarBearTorpor", getInteger(c, "value")))))
-                            .then(literal("baseRabbitTorpor")
-                                    .then(argument("value", integer())
-                                            .executes((c) -> setField(c.getSource(), Main.getBaseTorporConfig(),"baseRabbitTorpor", getInteger(c, "value")))))
-                            .then(literal("baseSheepTorpor")
-                                    .then(argument("value", integer())
-                                            .executes((c) -> setField(c.getSource(), Main.getBaseTorporConfig(),"baseSheepTorpor", getInteger(c, "value")))))
-                            .then(literal("baseLlamaTorpor")
-                                    .then(argument("value", integer())
-                                            .executes((c) -> setField(c.getSource(), Main.getBaseTorporConfig(),"baseLlamaTorpor", getInteger(c, "value")))))
-                            .then(literal("baseWolfTorpor")
-                                    .then(argument("value", integer())
-                                            .executes((c) -> setField(c.getSource(), Main.getBaseTorporConfig(),"baseWolfTorpor", getInteger(c, "value")))))
-                            .then(literal("baseBatTorpor")
-                                    .then(argument("value", integer())
-                                            .executes((c) -> setField(c.getSource(), Main.getBaseTorporConfig(),"baseBatTorpor", getInteger(c, "value")))))
-                            .then(literal("baseFishTorpor")
-                                    .then(argument("value", integer())
-                                            .executes((c) -> setField(c.getSource(), Main.getBaseTorporConfig(),"baseFishTorpor", getInteger(c, "value")))))
-                            .then(literal("baseSnowGolemTorpor")
-                                    .then(argument("value", integer())
-                                            .executes((c) -> setField(c.getSource(), Main.getBaseTorporConfig(),"baseSnowGolemTorpor", getInteger(c, "value")))))
-                            .then(literal("baseIronGolemTorpor")
-                                    .then(argument("value", integer())
-                                            .executes((c) -> setField(c.getSource(), Main.getBaseTorporConfig(),"baseIronGolemTorpor", getInteger(c, "value")))))
-                            .then(literal("baseSquidTorpor")
-                                    .then(argument("value", integer())
-                                            .executes((c) -> setField(c.getSource(), Main.getBaseTorporConfig(),"baseSquidTorpor", getInteger(c, "value")))))
-                            .then(literal("baseStriderTorpor")
-                                    .then(argument("value", integer())
-                                            .executes((c) -> setField(c.getSource(), Main.getBaseTorporConfig(),"baseStriderTorpor", getInteger(c, "value")))))
-                            .then(literal("baseTurtleTorpor")
-                                    .then(argument("value", integer())
-                                            .executes((c) -> setField(c.getSource(), Main.getBaseTorporConfig(),"baseTurtleTorpor", getInteger(c, "value")))))
-                            .then(literal("baseVillagerTorpor")
-                                    .then(argument("value", integer())
-                                            .executes((c) -> setField(c.getSource(), Main.getBaseTorporConfig(),"baseVillagerTorpor", getInteger(c, "value")))))
-                            .then(literal("baseIllagerTorpor")
-                                    .then(argument("value", integer())
-                                            .executes((c) -> setField(c.getSource(), Main.getBaseTorporConfig(),"baseIllagerTorpor", getInteger(c, "value")))))
-                            .then(literal("baseBeeTorpor")
-                                    .then(argument("value", integer())
-                                            .executes((c) -> setField(c.getSource(), Main.getBaseTorporConfig(),"baseBeeTorpor", getInteger(c, "value")))))
-                            .then(literal("baseSpiderTorpor")
-                                    .then(argument("value", integer())
-                                            .executes((c) -> setField(c.getSource(), Main.getBaseTorporConfig(),"baseSpiderTorpor", getInteger(c, "value")))))
-                            .then(literal("baseCaveSpiderTorpor")
-                                    .then(argument("value", integer())
-                                            .executes((c) -> setField(c.getSource(), Main.getBaseTorporConfig(),"baseCaveSpiderTorpor", getInteger(c, "value")))))
-                            .then(literal("baseDolphinTorpor")
-                                    .then(argument("value", integer())
-                                            .executes((c) -> setField(c.getSource(), Main.getBaseTorporConfig(),"baseDolphinTorpor", getInteger(c, "value")))))
-                            .then(literal("baseEndermanTorpor")
-                                    .then(argument("value", integer())
-                                            .executes((c) -> setField(c.getSource(), Main.getBaseTorporConfig(),"baseEndermanTorpor", getInteger(c, "value")))))
-                            .then(literal("basePandaTorpor")
-                                    .then(argument("value", integer())
-                                            .executes((c) -> setField(c.getSource(), Main.getBaseTorporConfig(),"basePandaTorpor", getInteger(c, "value")))))
-                            .then(literal("baseZombifiedPiglinTorpor")
-                                    .then(argument("value", integer())
-                                            .executes((c) -> setField(c.getSource(), Main.getBaseTorporConfig(),"baseZombifiedPiglinTorpor", getInteger(c, "value")))))
-                            .then(literal("basePiglinTorpor")
-                                    .then(argument("value", integer())
-                                            .executes((c) -> setField(c.getSource(), Main.getBaseTorporConfig(),"basePiglinTorpor", getInteger(c, "value")))))
-                            .then(literal("baseBlazeTorpor")
-                                    .then(argument("value", integer())
-                                            .executes((c) -> setField(c.getSource(), Main.getBaseTorporConfig(),"baseBlazeTorpor", getInteger(c, "value")))))
-                            .then(literal("baseCreeperTorpor")
-                                    .then(argument("value", integer())
-                                            .executes((c) -> setField(c.getSource(), Main.getBaseTorporConfig(),"baseCreeperTorpor", getInteger(c, "value")))))
-                            .then(literal("baseDrownedTorpor")
-                                    .then(argument("value", integer())
-                                            .executes((c) -> setField(c.getSource(), Main.getBaseTorporConfig(),"baseDrownedTorpor", getInteger(c, "value")))))
-                            .then(literal("baseZombieTorpor")
-                                    .then(argument("value", integer())
-                                            .executes((c) -> setField(c.getSource(), Main.getBaseTorporConfig(),"baseZombieTorpor", getInteger(c, "value")))))
-                            .then(literal("baseElderGuardianTorpor")
-                                    .then(argument("value", integer())
-                                            .executes((c) -> setField(c.getSource(), Main.getBaseTorporConfig(),"baseElderGuardianTorpor", getInteger(c, "value")))))
-                            .then(literal("baseGuardianTorpor")
-                                    .then(argument("value", integer())
-                                            .executes((c) -> setField(c.getSource(), Main.getBaseTorporConfig(),"baseGuardianTorpor", getInteger(c, "value")))))
-                            .then(literal("baseEndermiteTorpor")
-                                    .then(argument("value", integer())
-                                            .executes((c) -> setField(c.getSource(), Main.getBaseTorporConfig(),"baseEndermiteTorpor", getInteger(c, "value")))))
-                            .then(literal("baseSilverfishTorpor")
-                                    .then(argument("value", integer())
-                                            .executes((c) -> setField(c.getSource(), Main.getBaseTorporConfig(),"baseSilverfishTorpor", getInteger(c, "value")))))
-                            .then(literal("baseGhastTorpor")
-                                    .then(argument("value", integer())
-                                            .executes((c) -> setField(c.getSource(), Main.getBaseTorporConfig(),"baseGhastTorpor", getInteger(c, "value")))))
-                            .then(literal("baseHoglinTorpor")
-                                    .then(argument("value", integer())
-                                            .executes((c) -> setField(c.getSource(), Main.getBaseTorporConfig(),"baseHoglinTorpor", getInteger(c, "value")))))
-                            .then(literal("baseZoglinTorpor")
-                                    .then(argument("value", integer())
-                                            .executes((c) -> setField(c.getSource(), Main.getBaseTorporConfig(),"baseZoglinTorpor", getInteger(c, "value")))))
-                            .then(literal("baseSlimeTorpor")
-                                    .then(argument("value", integer())
-                                            .executes((c) -> setField(c.getSource(), Main.getBaseTorporConfig(),"baseSlimeTorpor", getInteger(c, "value")))))
-                            .then(literal("baseMagmaCubeTorpor")
-                                    .then(argument("value", integer())
-                                            .executes((c) -> setField(c.getSource(), Main.getBaseTorporConfig(),"baseMagmaCubeTorpor", getInteger(c, "value")))))
-                            .then(literal("basePhantomTorpor")
-                                    .then(argument("value", integer())
-                                            .executes((c) -> setField(c.getSource(), Main.getBaseTorporConfig(),"basePhantomTorpor", getInteger(c, "value")))))
-                            .then(literal("basePiglinBruteTorpor")
-                                    .then(argument("value", integer())
-                                            .executes((c) -> setField(c.getSource(), Main.getBaseTorporConfig(),"basePiglinBruteTorpor", getInteger(c, "value")))))
-                            .then(literal("baseRavagerTorpor")
-                                    .then(argument("value", integer())
-                                            .executes((c) -> setField(c.getSource(), Main.getBaseTorporConfig(),"baseRavagerTorpor", getInteger(c, "value")))))
-                            .then(literal("baseShulkerTorpor")
-                                    .then(argument("value", integer())
-                                            .executes((c) -> setField(c.getSource(), Main.getBaseTorporConfig(),"baseShulkerTorpor", getInteger(c, "value")))))
-                            .then(literal("baseSkeletonTorpor")
-                                    .then(argument("value", integer())
-                                            .executes((c) -> setField(c.getSource(), Main.getBaseTorporConfig(),"baseSkeletonTorpor", getInteger(c, "value")))))
-                            .then(literal("baseWitherSkeletonTorpor")
-                                    .then(argument("value", integer())
-                                            .executes((c) -> setField(c.getSource(), Main.getBaseTorporConfig(),"baseWitherSkeletonTorpor", getInteger(c, "value")))))
-                            .then(literal("baseVexTorpor")
-                                    .then(argument("value", integer())
-                                            .executes((c) -> setField(c.getSource(), Main.getBaseTorporConfig(),"baseVexTorpor", getInteger(c, "value")))))
-                            .then(literal("baseHuskTorpor")
-                                    .then(argument("value", integer())
-                                            .executes((c) -> setField(c.getSource(), Main.getBaseTorporConfig(),"baseHuskTorpor", getInteger(c, "value")))))
-                            .then(literal("baseStrayTorpor")
-                                    .then(argument("value", integer())
-                                            .executes((c) -> setField(c.getSource(), Main.getBaseTorporConfig(),"baseStrayTorpor", getInteger(c, "value")))))
-                            .then(literal("baseWitchTorpor")
-                                    .then(argument("value", integer())
-                                            .executes((c) -> setField(c.getSource(), Main.getBaseTorporConfig(),"baseWitchTorpor", getInteger(c, "value")))))));
+                        .then(argument("key", word()).suggests(ConfigCommand::suggestBaseTorporFields)
+                                .executes((c) -> getField(c.getSource(), Main.getBaseTorporConfig(), getString(c, "key")))
+                                .then(argument("value", greedyString())
+                                        .executes((c) -> setField(c.getSource(), Main.getBaseTorporConfig(), getString(c, "key"), getString(c, "value"))))));
 
-                        dispatcher.register(literalargumentbuilder);
+        dispatcher.register(literalargumentbuilder);
+    }
+
+    private static CompletableFuture<Suggestions> suggestGeneralFields(CommandContext<ServerCommandSource> context, SuggestionsBuilder suggestionsBuilder) {
+        suggestionsBuilder.suggest("tamingInterval", new TranslatableText("config.kotaming.generalConfiguration.tamingInterval"));
+        suggestionsBuilder.suggest("tamingSpeedMultiplier", new TranslatableText("config.kotaming.generalConfiguration.tamingSpeedMultiplier"));
+
+        return suggestionsBuilder.buildFuture();
+    }
+
+    private static CompletableFuture<Suggestions> suggestBaseTorporFields(CommandContext<ServerCommandSource> context, SuggestionsBuilder suggestionsBuilder) {
+        suggestionsBuilder.suggest("basePlayerTorpor", new TranslatableText("config.kotaming.baseTorporConfiguration.basePlayerTorpor"));
+        suggestionsBuilder.suggest("baseChickenTorpor", new TranslatableText("config.kotaming.baseTorporConfiguration.baseChickenTorpor"));
+        suggestionsBuilder.suggest("baseCowTorpor", new TranslatableText("config.kotaming.baseTorporConfiguration.baseCowTorpor"));
+        suggestionsBuilder.suggest("baseDonkeyTorpor", new TranslatableText("config.kotaming.baseTorporConfiguration.baseDonkeyTorpor"));
+        suggestionsBuilder.suggest("baseFoxTorpor", new TranslatableText("config.kotaming.baseTorporConfiguration.baseFoxTorpor"));
+        suggestionsBuilder.suggest("baseHorseTorpor", new TranslatableText("config.kotaming.baseTorporConfiguration.baseHorseTorpor"));
+        suggestionsBuilder.suggest("baseMooshroomTorpor", new TranslatableText("config.kotaming.baseTorporConfiguration.baseMooshroomTorpor"));
+        suggestionsBuilder.suggest("baseMuleTorpor", new TranslatableText("config.kotaming.baseTorporConfiguration.baseMuleTorpor"));
+        suggestionsBuilder.suggest("baseOcelotTorpor", new TranslatableText("config.kotaming.baseTorporConfiguration.baseOcelotTorpor"));
+        suggestionsBuilder.suggest("baseParrotTorpor", new TranslatableText("config.kotaming.baseTorporConfiguration.baseParrotTorpor"));
+        suggestionsBuilder.suggest("basePigTorpor", new TranslatableText("config.kotaming.baseTorporConfiguration.basePigTorpor"));
+        suggestionsBuilder.suggest("basePolarBearTorpor", new TranslatableText("config.kotaming.baseTorporConfiguration.basePolarBearTorpor"));
+        suggestionsBuilder.suggest("baseRabbitTorpor", new TranslatableText("config.kotaming.baseTorporConfiguration.baseRabbitTorpor"));
+        suggestionsBuilder.suggest("baseLlamaTorpor", new TranslatableText("config.kotaming.baseTorporConfiguration.baseLlamaTorpor"));
+        suggestionsBuilder.suggest("baseWolfTorpor", new TranslatableText("config.kotaming.baseTorporConfiguration.baseWolfTorpor"));
+        suggestionsBuilder.suggest("baseBatTorpor", new TranslatableText("config.kotaming.baseTorporConfiguration.baseBatTorpor"));
+        suggestionsBuilder.suggest("baseFishTorpor", new TranslatableText("config.kotaming.baseTorporConfiguration.baseFishTorpor"));
+        suggestionsBuilder.suggest("baseSnowGolemTorpor", new TranslatableText("config.kotaming.baseTorporConfiguration.baseSnowGolemTorpor"));
+        suggestionsBuilder.suggest("baseIronGolemTorpor", new TranslatableText("config.kotaming.baseTorporConfiguration.baseIronGolemTorpor"));
+        suggestionsBuilder.suggest("baseSquidTorpor", new TranslatableText("config.kotaming.baseTorporConfiguration.baseSquidTorpor"));
+        suggestionsBuilder.suggest("baseStriderTorpor", new TranslatableText("config.kotaming.baseTorporConfiguration.baseStriderTorpor"));
+        suggestionsBuilder.suggest("baseTurtleTorpor", new TranslatableText("config.kotaming.baseTorporConfiguration.baseTurtleTorpor"));
+        suggestionsBuilder.suggest("baseVillagerTorpor", new TranslatableText("config.kotaming.baseTorporConfiguration.baseVillagerTorpor"));
+        suggestionsBuilder.suggest("baseIllagerTorpor", new TranslatableText("config.kotaming.baseTorporConfiguration.baseIllagerTorpor"));
+        suggestionsBuilder.suggest("baseBeeTorpor", new TranslatableText("config.kotaming.baseTorporConfiguration.baseBeeTorpor"));
+        suggestionsBuilder.suggest("baseSpiderTorpor", new TranslatableText("config.kotaming.baseTorporConfiguration.baseSpiderTorpor"));
+        suggestionsBuilder.suggest("baseCaveSpiderTorpor", new TranslatableText("config.kotaming.baseTorporConfiguration.baseCaveSpiderTorpor"));
+        suggestionsBuilder.suggest("baseDolphinTorpor", new TranslatableText("config.kotaming.baseTorporConfiguration.baseDolphinTorpor"));
+        suggestionsBuilder.suggest("baseEndermanTorpor", new TranslatableText("config.kotaming.baseTorporConfiguration.baseEndermanTorpor"));
+        suggestionsBuilder.suggest("basePandaTorpor", new TranslatableText("config.kotaming.baseTorporConfiguration.basePandaTorpor"));
+        suggestionsBuilder.suggest("baseZombifiedPiglinTorpor", new TranslatableText("config.kotaming.baseTorporConfiguration.baseZombifiedPiglinTorpor"));
+        suggestionsBuilder.suggest("basePiglinTorpor", new TranslatableText("config.kotaming.baseTorporConfiguration.basePiglinTorpor"));
+        suggestionsBuilder.suggest("baseBlazeTorpor", new TranslatableText("config.kotaming.baseTorporConfiguration.baseBlazeTorpor"));
+        suggestionsBuilder.suggest("baseCreeperTorpor", new TranslatableText("config.kotaming.baseTorporConfiguration.baseCreeperTorpor"));
+        suggestionsBuilder.suggest("baseDrownedTorpor", new TranslatableText("config.kotaming.baseTorporConfiguration.baseDrownedTorpor"));
+        suggestionsBuilder.suggest("baseZombieTorpor", new TranslatableText("config.kotaming.baseTorporConfiguration.baseZombieTorpor"));
+        suggestionsBuilder.suggest("baseElderGuardianTorpor", new TranslatableText("config.kotaming.baseTorporConfiguration.baseElderGuardianTorpor"));
+        suggestionsBuilder.suggest("baseGuardianTorpor", new TranslatableText("config.kotaming.baseTorporConfiguration.baseGuardianTorpor"));
+        suggestionsBuilder.suggest("baseEndermiteTorpor", new TranslatableText("config.kotaming.baseTorporConfiguration.baseEndermiteTorpor"));
+        suggestionsBuilder.suggest("baseSilverfishTorpor", new TranslatableText("config.kotaming.baseTorporConfiguration.baseSilverfishTorpor"));
+        suggestionsBuilder.suggest("baseGhastTorpor", new TranslatableText("config.kotaming.baseTorporConfiguration.baseGhastTorpor"));
+        suggestionsBuilder.suggest("baseHoglinTorpor", new TranslatableText("config.kotaming.baseTorporConfiguration.baseHoglinTorpor"));
+        suggestionsBuilder.suggest("baseZoglinTorpor", new TranslatableText("config.kotaming.baseTorporConfiguration.baseZoglinTorpor"));
+        suggestionsBuilder.suggest("baseSlimeTorpor", new TranslatableText("config.kotaming.baseTorporConfiguration.baseSlimeTorpor"));
+        suggestionsBuilder.suggest("baseMagmaCubeTorpor", new TranslatableText("config.kotaming.baseTorporConfiguration.baseMagmaCubeTorpor"));
+        suggestionsBuilder.suggest("basePhantomTorpor", new TranslatableText("config.kotaming.baseTorporConfiguration.basePhantomTorpor"));
+        suggestionsBuilder.suggest("basePiglinBruteTorpor", new TranslatableText("config.kotaming.baseTorporConfiguration.basePiglinBruteTorpor"));
+        suggestionsBuilder.suggest("baseRavagerTorpor", new TranslatableText("config.kotaming.baseTorporConfiguration.baseRavagerTorpor"));
+        suggestionsBuilder.suggest("baseShulkerTorpor", new TranslatableText("config.kotaming.baseTorporConfiguration.baseShulkerTorpor"));
+        suggestionsBuilder.suggest("baseSkeletonTorpor", new TranslatableText("config.kotaming.baseTorporConfiguration.baseSkeletonTorpor"));
+        suggestionsBuilder.suggest("baseWitherSkeletonTorpor", new TranslatableText("config.kotaming.baseTorporConfiguration.baseWitherSkeletonTorpor"));
+        suggestionsBuilder.suggest("baseVexTorpor", new TranslatableText("config.kotaming.baseTorporConfiguration.baseVexTorpor"));
+        suggestionsBuilder.suggest("baseWitchTorpor", new TranslatableText("config.kotaming.baseTorporConfiguration.baseWitchTorpor"));
+        suggestionsBuilder.suggest("baseHuskTorpor", new TranslatableText("config.kotaming.baseTorporConfiguration.baseHuskTorpor"));
+        suggestionsBuilder.suggest("baseStrayTorpor", new TranslatableText("config.kotaming.baseTorporConfiguration.baseStrayTorpor"));
+
+        return suggestionsBuilder.buildFuture();
     }
 
     private static int getField(ServerCommandSource source, SimpleConfiguration config, String key) {
@@ -326,7 +116,24 @@ public class ConfigCommand {
         return 1;
     }
 
-    private static int setField(ServerCommandSource source, SimpleConfiguration config, String key, Object value) {
+    private static int setField(ServerCommandSource source, SimpleConfiguration config, String key, String value) {
+        if(config.getField(key) instanceof Integer) {
+            if(!isInt(value)) {
+                source.sendFeedback(new TranslatableText("command.setfield.failed.noint"), false);
+                return -1;
+            }
+        } else if(config.getField(key) instanceof Float) {
+            if(!isFloat(value)) {
+                source.sendFeedback(new TranslatableText("command.setfield.failed.nofloat"), false);
+                return -1;
+            }
+        } else if(config.getField(key) instanceof Boolean) {
+            if(!isBool(value)) {
+                source.sendFeedback(new TranslatableText("command.setfield.failed.nobool"), false);
+                return -1;
+            }
+        }
+
         int result = config.setField(key, value);
 
         if(result == -1) {
@@ -334,8 +141,35 @@ public class ConfigCommand {
             return -1;
         }
 
-        source.sendFeedback(new LiteralText(key + " -> " + value), false);
+        source.sendFeedback(new LiteralText(key + " -> " + config.getField(key).toString()), false);
         return 1;
+    }
+
+    private static boolean isInt(String v) {
+        try {
+            Integer.parseInt(v);
+            return true;
+        } catch(NumberFormatException e) {
+            return false;
+        }
+    }
+
+    private static boolean isFloat(String v) {
+        try {
+            Float.parseFloat(v);
+            return true;
+        } catch(NumberFormatException e) {
+            return false;
+        }
+    }
+
+    private static boolean isBool(String v) {
+        try {
+            Boolean.parseBoolean(v);
+            return true;
+        } catch(NumberFormatException e) {
+            return false;
+        }
     }
 
 }

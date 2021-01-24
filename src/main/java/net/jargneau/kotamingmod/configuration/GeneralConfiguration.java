@@ -22,10 +22,10 @@ public class GeneralConfiguration implements ConfigGroup, SimpleConfiguration {
     }
 
     @Override
-    public int setField(String key, Object value) {
+    public int setField(String key, String value) {
         switch(key) {
-            case "tamingInterval": tamingInterval = (float) value; return 1;
-            case "tamingSpeedMultiplier": tamingSpeedMultiplier = (float) value; return 1;
+            case "tamingInterval": tamingInterval = Float.parseFloat(value); return 1;
+            case "tamingSpeedMultiplier": tamingSpeedMultiplier = Float.parseFloat(value); return 1;
             default: return -1;
         }
     }
