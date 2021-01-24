@@ -8,6 +8,7 @@ import net.jargneau.kotamingmod.Main;
 import net.jargneau.kotamingmod.Register;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.PersistentProjectileEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.Packet;
@@ -68,6 +69,9 @@ public class TranqArrowEntity extends PersistentProjectileEntity {
             TorporEntity victim = (TorporEntity) hitResult.getEntity();
 
             victim.setTorpor(victim.getTorpor() + 25);
+            if(!((LivingEntity) victim).hasStatusEffect(Register.KNOCKOUT) && victim.getTorpor() >= victim.getBaseTorpor()) {
+                victim.setKnockedOutBy((PlayerEntity) this.getOwner());
+            }
         }
     }
 

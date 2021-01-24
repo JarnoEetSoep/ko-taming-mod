@@ -39,4 +39,9 @@ public abstract class MixinSkeletonEntity extends LivingEntity implements Torpor
         return this.BASETORPOR;
     }
 
+    @Override
+    public void tickTorpor() {
+        return;
+    }
+
 }

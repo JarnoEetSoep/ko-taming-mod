@@ -39,4 +39,9 @@ public abstract class MixinZombifiedPiglinEntity extends LivingEntity implements
         return this.BASETORPOR;
     }
 
+    @Override
+    public void tickTorpor() {
+        return;
+    }
+
 }

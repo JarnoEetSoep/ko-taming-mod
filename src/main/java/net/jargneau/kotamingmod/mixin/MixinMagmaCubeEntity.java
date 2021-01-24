@@ -39,4 +39,9 @@ public abstract class MixinMagmaCubeEntity extends SlimeEntity implements Torpor
         return this.BASETORPOR;
     }
 
+    @Override
+    public void tickTorpor() {
+        return;
+    }
+
 }

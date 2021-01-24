@@ -39,4 +39,9 @@ public abstract class MixinDolphinEntity extends LivingEntity implements TorporE
         return this.BASETORPOR;
     }
 
+    @Override
+    public void tickTorpor() {
+        return;
+    }
+
 }

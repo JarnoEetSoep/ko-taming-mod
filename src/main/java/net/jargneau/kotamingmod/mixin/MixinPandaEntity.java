@@ -39,4 +39,9 @@ public abstract class MixinPandaEntity extends LivingEntity implements TorporEnt
         return this.BASETORPOR;
     }
 
+    @Override
+    public void tickTorpor() {
+        return;
+    }
+
 }

@@ -42,4 +42,9 @@ public abstract class MixinSlimeEntity extends LivingEntity implements TorporEnt
         return this.BASETORPOR;
     }
 
+    @Override
+    public void tickTorpor() {
+        return;
+    }
+
 }

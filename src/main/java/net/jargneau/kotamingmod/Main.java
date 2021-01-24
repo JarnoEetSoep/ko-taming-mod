@@ -28,7 +28,6 @@ import java.util.Map;
 public class Main implements ModInitializer {
 
     public static final String MOD_ID = "kotaming";
-    public static Map<String, MobInventory> mobInventories = new HashMap<>();
     public static List<String> playersOpenedInventory = new ArrayList<>();
     private static ConfigHandler configHandler;
     private static BaseTorporConfiguration baseTorporConfiguration;

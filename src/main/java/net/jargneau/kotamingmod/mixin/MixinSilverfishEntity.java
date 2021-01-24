@@ -39,4 +39,9 @@ public abstract class MixinSilverfishEntity extends LivingEntity implements Torp
         return this.BASETORPOR;
     }
 
+    @Override
+    public void tickTorpor() {
+        return;
+    }
+
 }

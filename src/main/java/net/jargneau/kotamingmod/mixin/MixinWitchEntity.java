@@ -39,4 +39,9 @@ public abstract class MixinWitchEntity extends LivingEntity implements TorporEnt
         return this.BASETORPOR;
     }
 
+    @Override
+    public void tickTorpor() {
+        return;
+    }
+
 }

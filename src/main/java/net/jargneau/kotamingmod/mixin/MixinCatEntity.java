@@ -6,8 +6,8 @@ import net.jargneau.kotamingmod.entity.InventoryMob;
 import net.jargneau.kotamingmod.entity.KOTamableEntity;
 import net.jargneau.kotamingmod.entity.TorporEntity;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.passive.MooshroomEntity;
+import net.minecraft.entity.passive.CatEntity;
+import net.minecraft.entity.passive.TameableEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.Items;
@@ -18,16 +18,16 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-@Mixin(MooshroomEntity.class)
-public abstract class MixinMooshroomEntity extends LivingEntity implements TorporEntity, KOTamableEntity {
+@Mixin(CatEntity.class)
+public abstract class MixinCatEntity extends TameableEntity implements TorporEntity, KOTamableEntity {
 
     private int torpor = 0;
-    private final int BASETORPOR = Main.getBaseTorporConfig().baseMooshroomTorpor;
+    private final int BASETORPOR = Main.getBaseTorporConfig().baseOcelotTorpor;
     private int tamingPercent = 0;
     private PlayerEntity owner = null;
     private PlayerEntity knockedOutBy;
 
-    protected MixinMooshroomEntity(EntityType<? extends LivingEntity> entityType, World world) {
+    protected MixinCatEntity(EntityType<? extends TameableEntity> entityType, World world) {
         super(entityType, world);
     }
 
@@ -66,6 +66,9 @@ public abstract class MixinMooshroomEntity extends LivingEntity implements Torpo
                         if(this.tamingPercent >= 100) {
                             this.owner = knockedOutBy;
                             this.torpor = 0;
+
+                            this.setOwner(knockedOutBy);
+                            this.world.sendEntityStatus(this, (byte) 7);
                         }
 
                         break;
@@ -89,10 +92,10 @@ public abstract class MixinMooshroomEntity extends LivingEntity implements Torpo
         tamingFood.add(new HashMap<>());
         tamingFood.add(new HashMap<>());
 
-        tamingFood.get(0).put(Items.MUSHROOM_STEW, Math.round(85 * Main.getGeneralConfiguration().tamingSpeedMultiplier));
-        tamingFood.get(1).put(Items.RED_MUSHROOM, Math.round(45 * Main.getGeneralConfiguration().tamingSpeedMultiplier));
-        tamingFood.get(2).put(Items.BROWN_MUSHROOM, Math.round(40 * Main.getGeneralConfiguration().tamingSpeedMultiplier));
-        tamingFood.get(3).put(Items.WHEAT, Math.round(20 * Main.getGeneralConfiguration().tamingSpeedMultiplier));
+        tamingFood.get(0).put(Items.TROPICAL_FISH, Math.round(65 * Main.getGeneralConfiguration().tamingSpeedMultiplier));
+        tamingFood.get(1).put(Items.SALMON, Math.round(60 * Main.getGeneralConfiguration().tamingSpeedMultiplier));
+        tamingFood.get(2).put(Items.COD, Math.round(50 * Main.getGeneralConfiguration().tamingSpeedMultiplier));
+        tamingFood.get(3).put(Items.PUFFERFISH, Math.round(30 * Main.getGeneralConfiguration().tamingSpeedMultiplier));
 
         return tamingFood;
     }

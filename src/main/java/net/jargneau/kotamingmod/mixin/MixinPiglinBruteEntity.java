@@ -39,4 +39,9 @@ public abstract class MixinPiglinBruteEntity extends LivingEntity implements Tor
         return this.BASETORPOR;
     }
 
+    @Override
+    public void tickTorpor() {
+        return;
+    }
+
 }

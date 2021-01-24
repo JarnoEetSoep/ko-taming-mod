@@ -39,4 +39,9 @@ public abstract class MixinElderGuardianEntity extends LivingEntity implements T
         return this.BASETORPOR;
     }
 
+    @Override
+    public void tickTorpor() {
+        return;
+    }
+
 }

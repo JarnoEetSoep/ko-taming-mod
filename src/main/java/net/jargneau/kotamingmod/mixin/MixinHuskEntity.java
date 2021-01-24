@@ -39,4 +39,9 @@ public abstract class MixinHuskEntity extends LivingEntity implements TorporEnti
         return this.BASETORPOR;
     }
 
+    @Override
+    public void tickTorpor() {
+        return;
+    }
+
 }

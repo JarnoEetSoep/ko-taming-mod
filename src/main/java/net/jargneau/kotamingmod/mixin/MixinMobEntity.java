@@ -1,6 +1,6 @@
 package net.jargneau.kotamingmod.mixin;
 
-import net.jargneau.kotamingmod.Main;
+import net.jargneau.kotamingmod.entity.InventoryMob;
 import net.jargneau.kotamingmod.misc.MobInventory;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -12,7 +12,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(MobEntity.class)
-public abstract class MixinMobEntity extends LivingEntity {
+public abstract class MixinMobEntity extends LivingEntity implements InventoryMob {
 
     protected MixinMobEntity(EntityType<? extends LivingEntity> entityType, World world) {
         super(entityType, world);
@@ -24,9 +24,10 @@ public abstract class MixinMobEntity extends LivingEntity {
     public void tick(CallbackInfo ci) {
         if(!isAlive())
             this.inventory.dropInventory();
+    }
 
-        if(!Main.mobInventories.containsKey(getUuidAsString()))
-            Main.mobInventories.put(getUuidAsString(), this.inventory);
+    public MobInventory getInventory() {
+        return this.inventory;
     }
 
 }

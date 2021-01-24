@@ -39,4 +39,9 @@ public abstract class MixinIronGolemEntity extends LivingEntity implements Torpo
         return this.BASETORPOR;
     }
 
+    @Override
+    public void tickTorpor() {
+        return;
+    }
+
 }

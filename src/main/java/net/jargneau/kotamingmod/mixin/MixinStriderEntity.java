@@ -39,4 +39,9 @@ public abstract class MixinStriderEntity extends LivingEntity implements TorporE
         return this.BASETORPOR;
     }
 
+    @Override
+    public void tickTorpor() {
+        return;
+    }
+
 }

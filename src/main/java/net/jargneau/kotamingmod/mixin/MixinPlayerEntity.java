@@ -2,6 +2,7 @@ package net.jargneau.kotamingmod.mixin;
 
 import net.jargneau.kotamingmod.Main;
 import net.jargneau.kotamingmod.Register;
+import net.jargneau.kotamingmod.entity.InventoryMob;
 import net.jargneau.kotamingmod.entity.TorporEntity;
 import net.jargneau.kotamingmod.gui.MobInventoryScreenHandler;
 import net.jargneau.kotamingmod.gui.PlayerInventoryScreenHandler;
@@ -40,19 +41,20 @@ public abstract class MixinPlayerEntity extends LivingEntity implements TorporEn
 
         if(target.hasStatusEffect(Register.KNOCKOUT) && !Main.playersOpenedInventory.contains(self.getUuidAsString())) {
 
-            if(entity instanceof MobEntity)
+            if(entity instanceof InventoryMob)
                 self.openHandledScreen(new SimpleNamedScreenHandlerFactory((syncId, inv, playerEntity) ->
-                        new MobInventoryScreenHandler(syncId, self.inventory, Main.mobInventories.get(entity.getUuidAsString()), 3),
+                        new MobInventoryScreenHandler(syncId, self.inventory, ((InventoryMob) entity).getInventory(), 3),
                         target.getDisplayName()
                 ));
-            else
+            else if(entity instanceof PlayerEntity)
                 self.openHandledScreen(new SimpleNamedScreenHandlerFactory((syncId, inv, playerEntity) ->
                         new PlayerInventoryScreenHandler(syncId, self.inventory, ((PlayerEntity) entity).inventory),
                         target.getDisplayName()
                 ));
+            else
+                cir.setReturnValue(ActionResult.FAIL);
 
             Main.playersOpenedInventory.add(self.getUuidAsString());
-
             cir.setReturnValue(ActionResult.SUCCESS);
         }
     }
@@ -76,6 +78,11 @@ public abstract class MixinPlayerEntity extends LivingEntity implements TorporEn
     @Override
     public int getBaseTorpor() {
         return this.BASETORPOR;
+    }
+
+    @Override
+    public void tickTorpor() {
+        return;
     }
 
 }

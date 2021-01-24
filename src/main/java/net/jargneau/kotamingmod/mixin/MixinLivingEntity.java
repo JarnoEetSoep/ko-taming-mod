@@ -41,8 +41,10 @@ public abstract class MixinLivingEntity extends Entity {
                 self.setTorpor(self.getTorpor() - 4);
 
             if(this.hasStatusEffect(Register.KNOCKOUT)) {
-                if (this.hasVehicle())
+                if(this.hasVehicle())
                     this.stopRiding();
+
+                self.tickTorpor();
 
                 ci.cancel();
             }
